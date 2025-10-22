@@ -1,6 +1,8 @@
 // export const baseURL = import.meta.env.VITE_API_URL;
-// // console.log("Base URL:", baseURL);
-export const baseURL = "https://shortkit.onrender.com/";
+// console.log("Base URL:", baseURL);
+// Prefer Vite env var (set VITE_API_URL in client .env while developing).
+// Fallback to localhost dev server if the env var is not set.
+export const baseURL = import.meta.env.VITE_API_URL || "http://localhost:8080/";
 
 const SummaryApi = {
   register: {
