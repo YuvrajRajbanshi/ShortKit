@@ -16,7 +16,7 @@ import Axios from "./utils/Axios";
 import SummaryApi from "./common/SummaryApi";
 import { handleAddItemCart } from "./store/cartProduct";
 import GlobalProvider, { useGlobalContext } from "./provider/GlobalProvider";
-import Loading from "./components/Loading";
+import GlobalLoadingModal from "./components/GlobalLoadingModal";
 import { FaCartShopping } from "react-icons/fa6";
 import CartMobileLink from "./components/CartMobile";
 
@@ -78,9 +78,8 @@ function App() {
   return (
     <GlobalProvider>
       <Header />
-      {/* Full screen loader overlay (page-level) */}
-      {/* get globalLoading from context via useGlobalContext inside children; we'll render overlay here by consuming context via hook */}
-      <MainLoader />
+      {/* Beautiful full screen loader overlay */}
+      <GlobalLoadingModal />
       <main className="min-h-[78vh]">
         <Outlet />
       </main>
@@ -92,24 +91,3 @@ function App() {
 }
 
 export default App;
-
-// MainLoader: placed after default export so it's available in the file scope
-function MainLoader() {
-  // use context inside component rendered under GlobalProvider
-  try {
-    const { globalLoading } = useGlobalContext();
-
-    if (!globalLoading) return null;
-
-    return (
-      <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
-        <div className="bg-white p-6 rounded shadow">
-          <Loading />
-        </div>
-      </div>
-    );
-  } catch (err) {
-    // If context is not available, don't render loader
-    return null;
-  }
-}
