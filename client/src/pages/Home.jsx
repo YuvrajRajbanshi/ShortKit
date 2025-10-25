@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { valideURLConvert } from '../utils/valideURLConvert'
 import {Link, useNavigate} from 'react-router-dom'
 import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
+import CategorySkeletonLoader from '../components/CategorySkeletonLoader'
 
 const Home = () => {
   const loadingCategory = useSelector(state => state.product.loadingCategory)
@@ -48,14 +49,7 @@ const Home = () => {
       <div className='container mx-auto px-4 my-2 grid grid-cols-5 md:grid-cols-8 lg:grid-cols-10  gap-2'>
           {
             loadingCategory ? (
-              new Array(12).fill(null).map((c,index)=>{
-                return(
-                  <div key={index+"loadingcategory"} className='bg-white rounded p-4 min-h-36 grid gap-2 shadow animate-pulse'>
-                    <div className='bg-blue-100 min-h-24 rounded'></div>
-                    <div className='bg-blue-100 h-8 rounded'></div>
-                  </div>
-                )
-              })
+              <CategorySkeletonLoader count={12} />
             ) : (
               categoryData.map((cat,index)=>{
                 return(
@@ -63,7 +57,10 @@ const Home = () => {
                     <div>
                         <img 
                           src={cat.image}
+                          loading="lazy"
                           className='w-full h-full object-scale-down'
+                          alt={cat.name}
+                          decoding="async"
                         />
                     </div>
                   </div>

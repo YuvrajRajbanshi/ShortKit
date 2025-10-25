@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CardLoading from '../components/CardLoading'
+import SkeletonLoader from '../components/SkeletonLoader'
 import SummaryApi from '../common/SummaryApi'
 import Axios from '../utils/Axios'
 import AxiosToastError from '../utils/AxiosToastError'
@@ -85,11 +85,9 @@ const SearchPage = () => {
             {/***loading data */}
             {
               loading && (
-                loadingArrayCard.map((_,index)=>{
-                  return(
-                    <CardLoading key={"loadingsearchpage"+index}/>
-                  )
-                })
+                <div className='col-span-full'>
+                  <SkeletonLoader count={10} />
+                </div>
               )
             }
         </div>

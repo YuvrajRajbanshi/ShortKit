@@ -3,7 +3,7 @@ import { Link, } from 'react-router-dom'
 import AxiosToastError from '../utils/AxiosToastError'
 import Axios from '../utils/Axios'
 import SummaryApi from '../common/SummaryApi'
-import CardLoading from './CardLoading'
+import SkeletonLoader from './SkeletonLoader'
 import CardProduct from './CardProduct'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useSelector } from 'react-redux'
@@ -76,16 +76,9 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
             </div>
             <div className='relative flex items-center '>
                 <div className=' flex gap-4 md:gap-6 lg:gap-8 container mx-auto px-4 overflow-x-scroll scrollbar-none scroll-smooth' ref={containerRef}>
-                    {loading &&
-                        loadingCardNumber.map((_, index) => {
-                            return (
-                                <CardLoading key={"CategorywiseProductDisplay123" + index} />
-                            )
-                        })
-                    }
-
-
-                    {
+                    {loading ? (
+                        <SkeletonLoader count={6} />
+                    ) : (
                         data.map((p, index) => {
                             return (
                                 <CardProduct
@@ -94,7 +87,7 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
                                 />
                             )
                         })
-                    }
+                    )}
 
                 </div>
                 <div className='w-full left-0 right-0 container mx-auto  px-2  absolute hidden lg:flex justify-between'>
